@@ -7,8 +7,10 @@ import { useFonts } from 'expo-font';
 const GlobalLayout = () => {
     const [fontsLoaded] = useFonts({
         'Raleway_300Light': require('../assets/fonts/Raleway-Light.ttf'),
-        'Raleway_500Medium': require('../assets/fonts/Raleway-Bold.ttf'),
-        'Raleway_700Bold': require('../assets/fonts/Raleway-Black.ttf'),
+        'Raleway_400Regular': require('../assets/fonts/Raleway-Regular.ttf'),
+        'Raleway_500Medium': require('../assets/fonts/Raleway-Medium.ttf'),
+        'Raleway_700Bold': require('../assets/fonts/Raleway-Bold.ttf'),
+        'Raleway_800ExtraBold': require('../assets/fonts/Raleway-ExtraBold.ttf'),
     });
 
     if(!fontsLoaded) {
@@ -34,9 +36,8 @@ const GlobalLayout = () => {
                 text-black
                 dark:text-white
                 text-center
-                font-light
+                font-ralewaylight
                 text-lg
-                font-customlight
             '>&copy;{new Date().getFullYear()} Roomly.</Text>
         </SafeAreaView>
 	);

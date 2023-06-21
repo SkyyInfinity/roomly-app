@@ -5,7 +5,7 @@ const CustomButton = ({to, color, type, children, onPress}) => {
 
     const classes = {
         button: color === 'secondary' ? "bg-gray-100 dark:bg-gray-900 px-5 py-5 rounded-lg" : "bg-primary px-5 py-5 rounded-lg",
-        text: color === 'secondary' ? "text-gray-800 dark:text-white font-bold text-center" : "text-gray-800 font-bold text-center"
+        text: color === 'secondary' ? "text-gray-800 dark:text-white font-ralewaybold text-center" : "text-gray-800 font-ralewaybold text-center"
     }
 
     if(to) {

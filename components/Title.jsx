@@ -8,7 +8,7 @@ const Title = ({title, back}) => {
     const router = useRouter();
     const classes = {
         container: back ? "px-4 py-8 bg-white dark:bg-black flex flex-row gap-4 border-b border-slate-100 dark:border-slate-900" : "px-4 py-8 bg-white dark:bg-black border-b border-slate-100 dark:border-slate-900",
-        text: "text-4xl text-black dark:text-white font-custombold"
+        text: "text-4xl text-black dark:text-white font-ralewayextrabold"
     }
 
     if(back) {
