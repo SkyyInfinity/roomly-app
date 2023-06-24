@@ -20,9 +20,7 @@ module.exports = {
                 'secondary': '#333333',
                 'tertiary': '#706C61',
                 'quaternary': '#F7F8F9',
-            },
-            boxShadow: {
-                'input': '0px 0px 4px rgba(97, 232, 225, 0.25)',
+                'textlighter': '#888888'
             }
         },
     },
