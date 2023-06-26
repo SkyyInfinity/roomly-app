@@ -58,7 +58,7 @@ const TabBar = () => {
                         <View key={index}>
                             <CustomButton
                                 isIcon={pathname === item.path ? false : true}
-                                className={`flex-row items-center ${classes.button} ${item.lastItem === true ? '' : ''} ${pathname === item.path ? '!bg-primary' : '!bg-transparent'}`}
+                                className={`flex-row items-center ${classes.button} ${item.lastItem === true ? '' : ''} ${pathname === item.path ? '!bg-primary' : '!bg-white'}`}
                                 to={item.path}
                             >
                                 {

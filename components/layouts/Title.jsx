@@ -17,7 +17,7 @@ const Title = ({title, back}) => {
                 <Text className={classes.text} onPress={() => {
                     router.back();
                 }}>
-                    <AntDesign name="arrowleft" size={36} color="black" />
+                    <AntDesign name="arrowleft" size={32} color="black" />
                 </Text>
                 <Text className={classes.text}>
                     {title}

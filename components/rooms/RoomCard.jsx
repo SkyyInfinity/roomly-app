@@ -29,7 +29,7 @@ const RoomCard = ({room}) => {
                 </Text>
             </View>
             <View>
-                <CustomButton isCard={true} color="secondary">Réserver maintenant</CustomButton>
+                <CustomButton isCard={true} to={`/reserve/${room.id}`} color="secondary">Réserver maintenant</CustomButton>
             </View>
         </View>
     );

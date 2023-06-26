@@ -1,4 +1,4 @@
-import Title from "../components/Title";
+import Title from "../components/layouts/Title";
 import { ScrollView, View, ToastAndroid } from "react-native";
 import CustomButton from '../components/buttons/CustomButton';
 import { useAuth } from './../providers/AuthProviders';

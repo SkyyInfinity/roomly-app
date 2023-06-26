@@ -1,6 +1,6 @@
 import axios from 'redaxios';
 
-class RoomService {
+class ReservationService {
     constructor() {
         this.apiUrl = process.env.API_URL;
         this.config = {
@@ -13,9 +13,9 @@ class RoomService {
 
     async getAll(token) {
         this.config.headers['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get(`${this.apiUrl}/rooms`, this.config);
+        const response = await axios.get(`${this.apiUrl}/reservations`, this.config);
         return response.data;
     }
 }
 
-export default new RoomService();
+export default new ReservationService();

@@ -1,5 +1,5 @@
 import { ScrollView, View, Text } from "react-native";
-import Title from "../components/Title";
+import Title from "../components/layouts/Title";
 
 const Favorites = () => {
 	return <>
