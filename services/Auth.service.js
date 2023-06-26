@@ -1,5 +1,5 @@
 import axios from 'redaxios';
-import StorageService from './Storage.service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class AuthService {
     constructor() {
@@ -17,12 +17,11 @@ class AuthService {
             password: password
         };
 
-        try {
-            const response = await axios.post(`${this.apiUrl}/login`, credentials, this.config);
-            return response.data;
-        } catch (error) {
-            throw new Error(error);
+        const response = await axios.post(`${this.apiUrl}/login`, credentials, this.config);
+        if(response.data) {
+            await AsyncStorage.setItem('@roomly_token', response.data.token);
         }
+        return response.data;
     }
 
     async register(firstName, lastName, email, password) {
@@ -32,12 +31,20 @@ class AuthService {
             email: email,
             password: password
         };
+        
+        const response = await axios.post(`${this.apiUrl}/users`, credentials, this.config);
+        return response.data;
+    }
 
-        try {
-            const response = await axios.post(`${this.apiUrl}/users`, credentials, this.config);
-            return response.data;
-        } catch (error) {
-            throw new Error(error);
+    async logout() {
+        const token = await AsyncStorage.getItem('@roomly_token');
+        if (token !== null) {
+            this.config.headers['Authorization'] = `Bearer ${token}`;
+            const reponse = await axios.post(`${this.apiUrl}/logout`, null, this.config);
+            if(reponse.data) {
+                await AsyncStorage.removeItem('@roomly_token');
+            }
+            return reponse.data;
         }
     }
 
@@ -46,12 +53,8 @@ class AuthService {
             this.config.headers['Authorization'] = `Bearer ${token}`;
         }
 
-        try {
-            const response = await axios.get(`${this.apiUrl}/user`, this.config);
-            return response.data;
-        } catch (error) {
-            throw new Error(error);
-        }
+        const response = await axios.get(`${this.apiUrl}/user`, this.config);
+        return response.data;
     }
 }
 

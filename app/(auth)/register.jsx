@@ -7,6 +7,7 @@ import Logo from '../../assets/images/logo-text-secondary.svg';
 import * as Yup from 'yup';
 import AuthService from "../../services/Auth.service";
 import { useRouter } from "expo-router";
+import { useAuth } from "../../providers/AuthProviders";
 
 const Register = () => {
     const router = useRouter();
@@ -16,6 +17,7 @@ const Register = () => {
     const [password, setPassword] = useState(undefined);
     const [passwordConfirm, setPasswordConfirm] = useState(undefined);
     const [errors, setErrors] = useState(undefined);
+    const { setIsLoggedIn, setAuthPending } = useAuth();
 
     const RegisterSchema = Yup.object().shape({
         firstName: Yup.string()
@@ -24,48 +26,49 @@ const Register = () => {
             .required('Votre nom est requis'),
         email: Yup.string()
             .email('Votre adresse e-mail doit être un e-mail valide.')
-            .required('Required'),
+            .required('Votre adresse e-mail est requise.'),
         password: Yup.string()
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/, 'Votre mot de passe doit contenir des majuscules, des minuscules, des chiffres et des caractères spéciaux.')   
             .min(8, 'Votre mot de passe doit contenir au moins 8 caractères.')
             .required('Votre mot de passe est requis.')
     });
 
-    const handleRegister = () => {
-        const user = RegisterSchema.validate({
+    const handleRegister = async () => {
+        setErrors(undefined);
+        setAuthPending(true);
+        await RegisterSchema.validate({
             firstName: firstName,
             lastName: lastName,
             email: email,
             password: password
         })
-        .then((res) => {
-            console.log('res', res);
-            setErrors((prev) => {
-                prev = undefined;
-                if(!prev) {
-                    if(password === passwordConfirm) {
-                        AuthService.register(firstName, lastName, email, password)
-                        .then((response) => {
-                            router.push('/login');
-                        })
-                        .catch((error) => setErrors(['L\'utilisateur existe déjà ou le formulaire est invalide.']));
-                    } else {
-                        return ['Les mots de passe ne correspondent pas.'];
+        .then(async (res) => {
+            if(password === passwordConfirm) {
+                await AuthService.register(firstName, lastName, email, password)
+                .then((response) => {
+                    if(response.message) {
+                        router.push('/login');
                     }
-                }
-                return prev;
-            });
+                })
+                .catch((error) => {
+                    if(error.data) {
+                        setErrors(['Ce compte existe déjà.']);
+                    }
+                });
+            } else {
+                setErrors(['Les mots de passe ne correspondent pas.']);
+            }
         })
         .catch((err) => {
-            console.log('err', err.errors);
             setErrors(err.errors);
         });
+        setAuthPending(false);
     }
 
 	return <>
 		<View className="flex-1">
-            <View className="flex-1 py-8">
-                <View className="bg-primary flex-1 justify-center items-center !m-0">
+            <View className="flex-1 pb-8">
+                <View className="bg-primary pt-8 flex-1 justify-center items-center !m-0">
                     <Logo width={256}/>
                 </View>
                 <View className="flex-col gap-y-16 px-4 !m-0">

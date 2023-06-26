@@ -16,7 +16,7 @@ const CustomButton = ({className, to, color, isCard, children, isIcon, onPress, 
         }
     }
 
-    const lineHeight = isIcon ? 24 : 18;
+    const lineHeight = isIcon === true ? 24 : 18;
     
     if(to) {
         return (

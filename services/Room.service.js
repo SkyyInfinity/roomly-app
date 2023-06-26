@@ -1,27 +1,23 @@
 import axios from 'redaxios';
-import StorageService from './Storage.service';
 
 class RoomService {
     constructor() {
         this.apiUrl = process.env.API_URL;
-        StorageService.get('@roomly_token').then((res) => {
-            this.token = res;
-            this.config = {
-                headers: {
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${this.token}`
-                }
+        this.config = {
+            headers: {
+                'Accept': 'application/json',
+                'Authorization': ''
             }
-        });
+        }
     }
 
-    async getAll() {
-        try {
-            const response = await axios.get(`${this.apiUrl}/rooms`, this.config);
-            return response.data;
-        } catch (error) {
-            throw new Error(error);
+    async getAll(token) {
+        this.config.headers['Authorization'] = `Bearer ${token}`;
+        const response = await axios.get(`${this.apiUrl}/rooms`, this.config);
+        if(!response) {
+            console.log('no res');
         }
+        return response.data;
     }
 }
 

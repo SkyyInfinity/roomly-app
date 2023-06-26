@@ -7,12 +7,15 @@ import RoomService from "../services/Room.service";
 import RoomCard from "../components/rooms/RoomCard";
 import StorageService from '../services/Storage.service';
 import SearchIcon from '../assets/images/icons/fluent-search-24-regular.svg';
+import { useAuth } from "../providers/AuthProviders";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AuthService from "../services/Auth.service";
 
 const Home = () => {
+    const { setIsLoggedIn } = useAuth();
     const [search, setSearch] = useState('');
     const [rooms, setRooms] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    const [token, setToken] = useState(undefined);
     const [refreshing, setRefreshing] = useState(false);
 
     useEffect(() => {
@@ -20,12 +23,27 @@ const Home = () => {
     }, []);
 
     const getRooms = async () => {
-        await RoomService.getAll()
-        .then((response) => {
-            setRooms(response);
+        setLoading(true);
+        await AsyncStorage.getItem('@roomly_token')
+        .then(async (token) => {
+            //FIXME: ROOMS
+            if (token !== null) {
+                const response = await RoomService.getAll(token);
+                setRooms(response);
+                setLoading(false)
+            }
         })
-        .catch((error) => console.log('c\'est une erreur', error))
-        .finally(() => setLoading(false));
+        // .catch(async (error) => {
+        //     if(error.status === 401) {
+        //         const response = await AuthService.logout();
+
+        //         console.log('logout', response);
+        //         if(response) {
+        //             setIsLoggedIn(false);
+        //         }
+        //     }
+        //     setIsLoggedIn(false);
+        // });
     }
 
     const handleSearch = () => {
@@ -39,9 +57,7 @@ const Home = () => {
         // }
     };
 
-    const onRefresh = useCallback(() => {
-        setRooms([]);
-        setLoading(true);
+    const onRefresh = useCallback(async () => {
         setRefreshing(true);
         getRooms();
         setTimeout(() => {
@@ -58,7 +74,6 @@ const Home = () => {
             }
             className="h-full bg-white dark:bg-black"
         >
-            <Text>{token}</Text>
             <View className="flex flex-row p-4 bg-white !m-0 flex-1">
                 <TextInput
                     className="flex-1"
@@ -71,8 +86,9 @@ const Home = () => {
                 </CustomButton>
             </View>
             <View className="p-4 flex flex-col">
+                {/* <Text>{JSON.stringify(rooms)}</Text> */}
                 {
-                    isLoading ? <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">Chargement...</Text> : rooms.length === 0 ? (
+                    isLoading ? <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">Chargement...</Text> : !rooms ? (
                         <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">Aucune salle trouvée</Text>
                     ) : (
                         rooms.map((room, index) => (

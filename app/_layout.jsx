@@ -3,8 +3,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Text } from "react-native";
 import FocusedStatusBar from "../components/FocusedStatusBar";
 import { useFonts } from 'expo-font';
-import { Provider } from "../context/Auth";
 import { usePathname } from "expo-router";
+import TabBar from "../components/layouts/TabBar";
+import AuthProvider from "../providers/AuthProviders";
 
 const GlobalLayout = () => {
     const pathname = usePathname();
@@ -22,26 +23,27 @@ const GlobalLayout = () => {
     
     if(pathname === '/login' || pathname === '/register') {
         return (
-            <Provider>
+            <AuthProvider>
                 <SafeAreaView className="flex-1">
                     {/* Status bar */}
-                    <FocusedStatusBar backgroundColor="#fff"/>
+                    <FocusedStatusBar backgroundColor="#61E8E1"/>
                     {/* Screens */}
                     <Slot/>
                 </SafeAreaView>
-            </Provider>
+            </AuthProvider>
         );
     }
 
 	return (
-        <Provider>
+        <AuthProvider>
             <SafeAreaView className="flex-1">
                 {/* Status bar */}
                 <FocusedStatusBar backgroundColor="#fff"/>
                 {/* Screens */}
                 <Slot/>
                 {/* Footer */}
-                <Text className='
+                <TabBar/>
+                {/* <Text className='
                     p-4 
                     bg-white
                     dark:bg-black
@@ -55,9 +57,9 @@ const GlobalLayout = () => {
                     text-center
                     font-ralewaylight
                     text-lg
-                '>&copy;{new Date().getFullYear()} Roomly.</Text>
+                '>&copy;{new Date().getFullYear()} Roomly.</Text> */}
             </SafeAreaView>
-        </Provider>
+        </AuthProvider>
 	);
 };
 

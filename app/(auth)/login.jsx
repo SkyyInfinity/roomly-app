@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { ScrollView, Text, View, Image } from "react-native";
-import { useAuth } from "../../context/Auth";
+import { Text, View } from "react-native";
 import CustomButton from './../../components/buttons/CustomButton';
 import AuthService from "../../services/Auth.service";
-import StorageService from "../../services/Storage.service";
 import TextInput from "../../components/inputs/TextInput";
 import { Link } from "expo-router";
 import Logo from '../../assets/images/logo-text-secondary.svg';
 import * as Yup from 'yup';
+import { useAuth } from "../../providers/AuthProviders";
 
 const Login = () => {
-	const { signIn } = useAuth();
+	const { setAuthPending, setIsLoggedIn, setProfile } = useAuth();
     const [email, setEmail] = useState(undefined);
     const [password, setPassword] = useState(undefined);
     const [errors, setErrors] = useState(undefined);
@@ -18,37 +17,40 @@ const Login = () => {
     const LoginSchema = Yup.object().shape({
         email: Yup.string()
             .email('Votre adresse e-mail doit être un e-mail valide.')
-            .required('Required'),
+            .required('Votre adresse e-mail est requise.'),
         password: Yup.string()
             .required('Votre mot de passe est requis.')
     });
 
-    const handleLogin = () => {
-        const user = LoginSchema.validate({
+    const handleLogin = async () => {
+        setAuthPending(true);
+        await LoginSchema.validate({
             email: email,
             password: password
         })
-        .then((res) => {
-            AuthService.login(email, password)
-            .then((response) => {
-                const token = response.token;
-                if(token !== null) {
-                    StorageService.set('@roomly_token', token);
-                    signIn(response);
-                }
-            })
-            .catch((error) => setErrors(["Une erreur est survenue, vérifier vos informations."]));
+        .then(async (res) => {
+            const response = await AuthService.login(email, password);
+
+            if(response) {
+                setIsLoggedIn(true);
+                setProfile({
+                    token: response.token,
+                    user: response.user
+                });
+            } else {
+                setErrors(['Identifiants invalide. Veuillez réessayer.']);
+            }
         })
         .catch((err) => {
-            console.log('err', err);
             setErrors(err.errors);
         });
+        setAuthPending(false);
     }
 
 	return <>
 		<View className="flex-1">
-            <View className="flex-1 flex-col py-8">
-                <View className="bg-primary flex-1 justify-center items-center !m-0">
+            <View className="flex-1 flex-col pb-8">
+                <View className="bg-primary flex-1 pt-8 justify-center items-center !m-0">
                     <Logo width={256} height={200}/>
                 </View>
                 <View className="flex-col gap-y-16 px-4 !m-0">

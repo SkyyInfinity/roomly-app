@@ -22,6 +22,7 @@
     "expo-router": "^1.5.3",
     "expo-status-bar": "~1.4.4",
     "formik": "^2.4.2",
+    "jwt-decode": "^3.1.2",
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-native": "0.71.8",
