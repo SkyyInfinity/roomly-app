@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, ToastAndroid } from "react-native";
 import CustomButton from './../../components/buttons/CustomButton';
 import AuthService from "../../services/Auth.service";
 import TextInput from "../../components/inputs/TextInput";
@@ -22,6 +22,10 @@ const Login = () => {
             .required('Votre mot de passe est requis.')
     });
 
+    function showToast(message) {
+        ToastAndroid.show(message, ToastAndroid.SHORT);
+    }
+
     const handleLogin = async () => {
         setAuthPending(true);
         await LoginSchema.validate({
@@ -37,6 +41,7 @@ const Login = () => {
                     token: response.token,
                     user: response.user
                 });
+                showToast('Vous êtes maintenant connecté.');
             } else {
                 setErrors(['Identifiants invalide. Veuillez réessayer.']);
             }

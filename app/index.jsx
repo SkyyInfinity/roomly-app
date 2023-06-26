@@ -97,9 +97,6 @@ const Home = () => {
                     )
                 }
             </View>
-            <View className="px-4 mt-4">
-                <CustomButton to="/settings" color="secondary">Paramètres</CustomButton>
-            </View>
         </ScrollView>
 	</>;
 };

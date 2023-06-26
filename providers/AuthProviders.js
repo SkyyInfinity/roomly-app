@@ -26,7 +26,7 @@ const AuthProvider = ({children}) => {
                 
                 if(!isExpired) {
                     const res = await AuthService.check(token);
-                    console.log('tokecccn', token);
+
                     if(res) {
                         setProfile({
                             token: token,
@@ -72,9 +72,10 @@ const AuthProvider = ({children}) => {
             router.replace('/login');
         } else if(!inAuthGroup && isLoggedIn) {
             checkAuth();
-            console.log('inAuthGroup: false && isLoggedIn: true');
         } else if(inAuthGroup && isLoggedIn) {
             router.replace('/');
+        } else if(inAuthGroup && !isLoggedIn) {
+            checkAuth();
         } else {
             setProfile({});
             setIsLoggedIn(false);
