@@ -1,14 +1,19 @@
 import Title from "../components/layouts/Title";
-import { ScrollView, View, ToastAndroid } from "react-native";
+import { ScrollView, View } from "react-native";
 import CustomButton from '../components/buttons/CustomButton';
 import { useAuth } from './../providers/AuthProviders';
 import AuthService from "../services/Auth.service";
+import { useToast } from "react-native-toast-notifications";
 
 const Settings = () => {
+    const toast = useToast();
     const { setIsLoggedIn, setAuthPending } = useAuth();
 
     function showToast(message) {
-        ToastAndroid.show(message, ToastAndroid.SHORT);
+        toast.show(message, {
+            type: 'success'
+        });
+        console.log('toast', toast.type);
     }
 
     const handleLogout = async () => {

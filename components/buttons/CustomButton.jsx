@@ -5,14 +5,16 @@ const CustomButton = ({className, to, color, isCard, children, isIcon, onPress, 
 
     const classes = {
         button: {
-            'primary': `w-full flex items-center justify-center bg-primary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
-            'secondary': `w-full flex items-center justify-center bg-secondary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
-            'tertiary': `w-full flex items-center justify-center bg-quaternary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`
+            primary: `w-full flex items-center justify-center bg-primary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
+            secondary: `w-full flex items-center justify-center bg-secondary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
+            tertiary: `w-full flex items-center justify-center bg-quaternary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
+            error: `w-full flex items-center justify-center bg-red-100 px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`
         },
         text: {
-            'primary': 'text-black text-base text-center font-ralewaymedium',
-            'secondary': 'text-white text-base font-ralewaybold text-center font-ralewaymedium',
-            'tertiary': 'text-black text-base font-ralewaybold text-center font-ralewaymedium'
+            primary: 'text-black text-base text-center font-ralewaymedium',
+            secondary: 'text-white text-base font-ralewaybold text-center font-ralewaymedium',
+            tertiary: 'text-black text-base font-ralewaybold text-center font-ralewaymedium',
+            error: 'text-red-500 text-base font-ralewaybold text-center font-ralewaymedium'
         }
     }
 

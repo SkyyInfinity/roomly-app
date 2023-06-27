@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 import CustomButton from "../buttons/CustomButton";
 import { useState } from "react";
 import HeartIcon from '../../assets/images/icons/fluent-heart-24-regular.svg';
-import Animated, { SlideInUp, SlideInRight } from "react-native-reanimated";
+import Animated, { SlideInRight } from "react-native-reanimated";
 
 const RoomCard = ({room, index}) => {
     const [expanded, setExpanded] = useState(false);

@@ -12,9 +12,11 @@ class RoomService {
     }
 
     async getAll(token) {
-        this.config.headers['Authorization'] = `Bearer ${token}`;
-        const response = await axios.get(`${this.apiUrl}/rooms`, this.config);
-        return response.data;
+        if(token) {
+            this.config.headers['Authorization'] = `Bearer ${token}`;
+            const response = await axios.get(`${this.apiUrl}/rooms`, this.config);
+            return response.data;
+        }
     }
 }
 

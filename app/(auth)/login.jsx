@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Text, View, ToastAndroid } from "react-native";
+import { Text, View } from "react-native";
 import CustomButton from './../../components/buttons/CustomButton';
 import AuthService from "../../services/Auth.service";
 import TextInput from "../../components/inputs/TextInput";
@@ -7,12 +7,14 @@ import { Link } from "expo-router";
 import Logo from '../../assets/images/logo-text-secondary.svg';
 import * as Yup from 'yup';
 import { useAuth } from "../../providers/AuthProviders";
+import { useToast } from "react-native-toast-notifications";
 
 const Login = () => {
 	const { setAuthPending, setIsLoggedIn, setProfile } = useAuth();
     const [email, setEmail] = useState(undefined);
     const [password, setPassword] = useState(undefined);
     const [errors, setErrors] = useState(undefined);
+    const toast = useToast();
 
     const LoginSchema = Yup.object().shape({
         email: Yup.string()
@@ -23,7 +25,9 @@ const Login = () => {
     });
 
     function showToast(message) {
-        ToastAndroid.show(message, ToastAndroid.SHORT);
+        toast.show(message, {
+            type: 'success'
+        });
     }
 
     const handleLogin = async () => {
@@ -74,6 +78,8 @@ const Login = () => {
                             value={email}
                             placeholder="Adresse e-mail"
                             textContentType="emailAddress"
+                            autoCompleteType="email"
+                            autoCapitalize="none"
                             keyboardType="email-address"
                             returnKeyType="next"
                             returnKeyLabel="next"
@@ -90,6 +96,9 @@ const Login = () => {
                             returnKeyType="done"
                             returnKeyLabel="done"
                         />
+                        <Link href="/forgot" style={{marginTop: 0, marginBottom: 8, lineHeight: 16}} className="text-primary text-base font-ralewaylight">
+                            Mot de passe oublié ?
+                        </Link>
                         <CustomButton color="primary" onPress={handleLogin}>Se connecter</CustomButton>
                     </View>
                     <Text className="w-full text-center text-base font-ralewaylight text-textlighter">Pas encore de compte ? <Link href="/register" className="text-primary">Inscrivez-vous</Link></Text>

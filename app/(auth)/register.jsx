@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import AuthService from "../../services/Auth.service";
 import { useRouter } from "expo-router";
 import { useAuth } from "../../providers/AuthProviders";
+import { useToast } from "react-native-toast-notifications";
 
 const Register = () => {
     const router = useRouter();
@@ -17,7 +18,14 @@ const Register = () => {
     const [password, setPassword] = useState(undefined);
     const [passwordConfirm, setPasswordConfirm] = useState(undefined);
     const [errors, setErrors] = useState(undefined);
-    const { setIsLoggedIn, setAuthPending } = useAuth();
+    const { setAuthPending } = useAuth();
+    const toast = useToast();
+
+    function showToast(message) {
+        toast.show(message, {
+            type: 'success',
+        });
+    }
 
     const RegisterSchema = Yup.object().shape({
         firstName: Yup.string()
@@ -47,6 +55,7 @@ const Register = () => {
                 await AuthService.register(firstName, lastName, email, password)
                 .then((response) => {
                     if(response.message) {
+                        showToast('Votre compte a bien été créé.');
                         router.push('/login');
                     }
                 })
