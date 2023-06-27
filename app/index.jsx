@@ -7,6 +7,7 @@ import RoomService from "../services/Room.service";
 import RoomCard from "../components/rooms/RoomCard";
 import SearchIcon from '../assets/images/icons/fluent-search-24-regular.svg';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { set } from "react-native-reanimated";
 
 const Home = () => {
     const [search, setSearch] = useState('');
@@ -25,19 +26,29 @@ const Home = () => {
             if (token !== null) {
                 const response = await RoomService.getAll(token);
                 setRooms(response);
-                setLoading(false)
+                setLoading(false);
             }
         })
     }
 
-    const handleSearch = () => {
-        // if (rooms.length > 0) {
-        //     const filteredRooms = rooms.filter((room) => room.name.toLowerCase().includes(search.toLowerCase()));
-        //     setRooms(filteredRooms);
-        // }
-        // else {
-        //     getRooms();
-        // }
+    const handleSearch = async (value) => {
+        setLoading(true);
+        await AsyncStorage.getItem('@roomly_token')
+        .then(async (token) => {
+            if (token !== null) {
+                const response = await RoomService.getAll(token);
+                if(!value.length) {
+                    setRooms(response);
+                }
+                const filteredRooms = response.filter((room) => room.name.toLowerCase().includes(search.toLowerCase()));
+                if(filteredRooms.length) {
+                    setRooms(filteredRooms);
+                } else {
+                    setRooms([]);
+                }
+                setLoading(false);
+            }
+        });
     };
 
     const onRefresh = useCallback(async () => {
@@ -72,8 +83,18 @@ const Home = () => {
                 {
                     isLoading ? (
                         <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">Chargement...</Text>
-                    ) : !rooms ? (
-                        <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">Aucune salle trouvée</Text>
+                    ) : rooms.length === 0 ? (
+                        <View>
+                            <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">
+                                Aucune salle trouvée
+                            </Text>
+                            <Text onPress={() => {
+                                getRooms();
+                                setSearch('');
+                            }} className="py-3 px-6 text-center text-textlighter font-ralewayregular">
+                                Cliquez ici pour rafraîchir
+                            </Text>
+                        </View>
                     ) : (
                         rooms.map((room, index) => (
                             <RoomCard key={index} index={index} room={room}/>

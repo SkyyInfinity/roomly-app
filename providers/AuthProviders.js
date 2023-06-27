@@ -20,7 +20,7 @@ const AuthProvider = ({children}) => {
         
         if(token !== null) {
             try {
-                const decoded = jwt_decode(token, { header: true });
+                const decoded = jwt_decode(token);
                 let diff = decoded.exp - Date.now() / 1000;
                 let isExpired = diff < 0 ? true : false;
                 

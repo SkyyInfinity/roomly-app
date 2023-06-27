@@ -87,8 +87,8 @@ const Login = () => {
                             autoCompleteType="password"
                             autoCapitalize="none"
                             secureTextEntry
-                            returnKeyType="send"
-                            returnKeyLabel="send"
+                            returnKeyType="done"
+                            returnKeyLabel="done"
                         />
                         <CustomButton color="primary" onPress={handleLogin}>Se connecter</CustomButton>
                     </View>
