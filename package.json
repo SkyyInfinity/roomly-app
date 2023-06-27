@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "start:clear": "expo start --clear"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
@@ -33,7 +34,8 @@
     "react-native-svg": "~13.4.0",
     "react-native-web": "~0.18.10",
     "redaxios": "^0.5.1",
-    "yup": "^1.2.0"
+    "yup": "^1.2.0",
+    "react-native-reanimated": "~2.14.4"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

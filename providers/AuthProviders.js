@@ -60,7 +60,6 @@ const AuthProvider = ({children}) => {
             setProfile({});
             setIsLoggedIn(false);
             setAuthPending(false);
-            router.replace('/login');
         }
     }
 

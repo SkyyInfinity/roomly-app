@@ -2,8 +2,9 @@ import { View, Text, Image } from "react-native";
 import CustomButton from "../buttons/CustomButton";
 import { useState } from "react";
 import HeartIcon from '../../assets/images/icons/fluent-heart-24-regular.svg';
+import Animated, { SlideInUp, SlideInRight } from "react-native-reanimated";
 
-const RoomCard = ({room}) => {
+const RoomCard = ({room, index}) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleFavorite = () => {
@@ -11,7 +12,7 @@ const RoomCard = ({room}) => {
     }
 
 	return (
-        <View className="border border-slate-200 rounded-xl overflow-hidden mb-4 relative">
+        <Animated.View entering={SlideInRight.delay(index * 100)} className="border border-slate-200 rounded-xl overflow-hidden mb-4 relative">
             <CustomButton  onPress={handleFavorite} color="primary" className="absolute top-4 right-4 z-10 w-[42px] h-[42px] bg-white rounded-full !p-0">
                 <HeartIcon />
             </CustomButton>
@@ -31,7 +32,7 @@ const RoomCard = ({room}) => {
             <View>
                 <CustomButton isCard={true} to={`/reserve/${room.id}`} color="secondary">Réserver maintenant</CustomButton>
             </View>
-        </View>
+        </Animated.View>
     );
 };
 

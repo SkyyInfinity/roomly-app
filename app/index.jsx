@@ -76,7 +76,7 @@ const Home = () => {
                         <Text className="py-3 px-6 text-center text-textlighter font-ralewayregular">Aucune salle trouvée</Text>
                     ) : (
                         rooms.map((room, index) => (
-                            <RoomCard key={index} room={room}/>
+                            <RoomCard key={index} index={index} room={room}/>
                         ))
                     )
                 }
