@@ -86,7 +86,7 @@ const CreateReservation = () => {
                     })
                 }
                     <View className="!mb-2">
-                        <Text className="text-sm font-ralewaybold text-textlighter uppercase mb-2">Date de la réservation</Text>
+                        <Text className="text-xs font-ralewaybold text-textlighter uppercase mb-2">Date de la réservation</Text>
                         <Pressable onPress={() => setShowStart(true)}>
                             <TextInput 
                                 placeholder="Date de début"
@@ -108,10 +108,9 @@ const CreateReservation = () => {
                             />
                         )
                     }
-                    
 
                     <View className="!mb-4">
-                        <Text className="text-sm font-ralewaybold text-textlighter uppercase mb-2">Horaire de la réservation</Text>
+                        <Text className="text-xs font-ralewaybold text-textlighter uppercase mb-2">Horaire de début</Text>
                         <Pressable onPress={() => setShowTime(true)}>
                             <TextInput 
                                 placeholder="Horaire de début"

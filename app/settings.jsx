@@ -8,6 +8,7 @@ import Constants from "expo-constants"
 import Logo from '../assets/images/logo-text-secondary.svg';
 import ArrowRightIcon from '../assets/images/icons/arrow-right-24-regular.svg';
 import { Link } from "expo-router";
+import CustomLinkIcon from "../components/link/CustomLinkIcon";
 
 const Settings = () => {
     const toast = useToast();
@@ -48,22 +49,8 @@ const Settings = () => {
                 <Text className="font-ralewayextrabold text-2xl !m-0 leading-6">Aide</Text>
                 <Text className="text-base font-ralewaylight text-textlighter mt-1">Consultez nos liens d'assistance.</Text>
                 <View className="p-4 border border-slate-200 rounded-lg mt-4">
-                    <Link href={process.env.API_URL.replace('api', '')} style={{flex:1,flexDirection:"row",justifyContent:'space-between'}} className="flex items-center flex-row">
-                        <View style={{width: 164}}>
-                            <Text className="!m-0 font-ralewaymedium text-base leading-4">Foire aux question</Text>
-                        </View>
-                        <View className="pl-4">
-                            <ArrowRightIcon width={18} height={18} />
-                        </View>
-                    </Link>
-                    <Link href={process.env.API_URL.replace('api', '')} style={{justifyContent: 'space-between'}} className="flex items-center flex-row !m-0 mt-4">
-                        <View style={{width: 164}}>
-                            <Text className="!m-0 font-ralewaymedium text-base leading-4">Nous contacter</Text>
-                        </View>
-                        <View className="pl-4">
-                            <ArrowRightIcon width={18} height={18} />
-                        </View>
-                    </Link>
+                    <CustomLinkIcon className="mb-2" to={process.env.API_URL.replace('api', '')} label="Foire aux questions"/>
+                    <CustomLinkIcon to={process.env.API_URL.replace('api', '')} label="Nous contacter"/>
                 </View>
             </View>
             <View className="p-4 flex-col !m-0">
