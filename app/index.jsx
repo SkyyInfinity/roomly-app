@@ -7,26 +7,31 @@ import RoomService from "../services/Room.service";
 import RoomCard from "../components/rooms/RoomCard";
 import SearchIcon from '../assets/images/icons/fluent-search-24-regular.svg';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { set } from "react-native-reanimated";
+import { useAuth } from "../providers/AuthProviders";
 
 const Home = () => {
     const [search, setSearch] = useState('');
     const [rooms, setRooms] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
+    const { profile } = useAuth();
+
+    const userId = profile.user ? profile.user.id : null;
 
     useEffect(() => {
-        getRooms();
+        getRooms(userId);
     }, []);
 
-    const getRooms = async () => {
+    const getRooms = async (user_id) => {
         setLoading(true);
         await AsyncStorage.getItem('@roomly_token')
         .then(async (token) => {
             if (token !== null) {
-                const response = await RoomService.getAll(token);
-                setRooms(response);
-                setLoading(false);
+                const response = await RoomService.getAll(token, user_id);
+                if(response) {
+                    setRooms(response);
+                    setLoading(false);
+                }
             }
         })
     }
@@ -36,7 +41,7 @@ const Home = () => {
         await AsyncStorage.getItem('@roomly_token')
         .then(async (token) => {
             if (token !== null) {
-                const response = await RoomService.getAll(token);
+                const response = await RoomService.getAll(token, userId);
                 if(!value.length) {
                     setRooms(response);
                 }
@@ -53,7 +58,7 @@ const Home = () => {
 
     const onRefresh = useCallback(async () => {
         setRefreshing(true);
-        getRooms();
+        getRooms(userId);
         setTimeout(() => {
           setRefreshing(false);
         }, 1000);
@@ -89,16 +94,19 @@ const Home = () => {
                                 Aucune salle trouvée
                             </Text>
                             <Text onPress={() => {
-                                getRooms();
+                                getRooms(userId);
                                 setSearch('');
                             }} className="py-3 px-6 text-center text-textlighter font-ralewayregular">
                                 Cliquez ici pour rafraîchir
                             </Text>
                         </View>
                     ) : (
-                        rooms.map((room, index) => (
-                            <RoomCard key={index} index={index} room={room}/>
-                        ))
+                        rooms.map((room, index) => {
+                            
+                            return (
+                                <RoomCard key={index} index={index} room={room} favorite={room.favorite_id} isFavorite={ room.is_favorite ? true : false }/>
+                            )
+                        })
                     )
                 }
             </View>

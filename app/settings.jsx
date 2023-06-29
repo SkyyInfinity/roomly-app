@@ -1,9 +1,10 @@
 import Title from "../components/layouts/Title";
-import { ScrollView, View } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import CustomButton from '../components/buttons/CustomButton';
 import { useAuth } from './../providers/AuthProviders';
 import AuthService from "../services/Auth.service";
 import { useToast } from "react-native-toast-notifications";
+import Logo from '../assets/images/logo-text-secondary.svg';
 
 const Settings = () => {
     const toast = useToast();
@@ -31,6 +32,15 @@ const Settings = () => {
 	return <>
         <Title title="Paramètres"/>
         <ScrollView className="h-full py-4 bg-white dark:bg-black">
+            <View className="px-4 flex flex-col gap-y-2">
+                <View>
+                    <Logo width="100%"/>
+                </View>
+                <View>
+                    <Text>Roomly App</Text>
+                    <Text>Ver 1.0.0</Text>
+                </View>
+            </View>
             <View className="px-4 flex flex-col gap-y-2">
                 <CustomButton color="tertiary" onPress={handleLogout}>Se déconnecter</CustomButton>
             </View>

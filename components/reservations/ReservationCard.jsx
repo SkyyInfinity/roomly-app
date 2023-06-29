@@ -2,9 +2,24 @@ import { View, Text } from "react-native";
 import CustomButton from "../buttons/CustomButton";
 import DeleteIcon from "../../assets/images/icons/delete-18-regular.svg";
 import Animated, { SlideInRight } from "react-native-reanimated";
+import { Alert } from "react-native";
 
 const ReservationCard = ({reservation, index}) => {
     let start_at = new Date(reservation.start_at);
+
+    const handleDelete = async (id) => {
+        Alert.alert('Supprimer la réservation', `Voulez-vous vraiment supprimer la réservation pour "${reservation.room.name}" ?`, 
+            [
+                { text: 'Oui', onPress: () => deleteReservation(id), style: 'default' },
+                { text: 'Annuler', style: 'cancel' }
+            ], 
+            { cancelable: true }
+        );
+    }
+
+    const deleteReservation = async (id) => {
+        console.log(`Deleting reservation ${id}`);
+    }
 
 	return (
         <Animated.View entering={SlideInRight.delay(index * 100)} className="border border-slate-200 rounded-xl overflow-hidden mb-4 relative p-4 flex flex-row items-center flex-1">

@@ -11,11 +11,15 @@ class ReservationService {
         }
     }
 
-    async getAll(token) {
+    async getAll(token, id) {
         if(token) {
-            this.config.headers['Authorization'] = `Bearer ${token}`; 
-            const response = await axios.get(`${this.apiUrl}/reservations`, this.config);
-            return response.data;
+            try {
+                this.config.headers['Authorization'] = `Bearer ${token}`; 
+                const response = await axios.get(`${this.apiUrl}/user-reservations/${id}`, this.config);
+                return response.data;
+            } catch (error) {
+                throw error;
+            }
         }
     }
 }

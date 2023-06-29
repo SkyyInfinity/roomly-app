@@ -1,9 +1,9 @@
 {
 	"expo": {
-		"name": "roomly-app",
+		"name": "Roomly",
 		"slug": "roomly-app",
 		"version": "1.0.0",
-        "scheme": "roomly-app",
+		"scheme": "roomly-app",
 		"orientation": "portrait",
 		"icon": "./assets/icon.png",
 		"userInterfaceStyle": "light",
@@ -14,13 +14,16 @@
 		},
 		"assetBundlePatterns": ["**/*"],
 		"ios": {
-			"supportsTablet": true
+			"supportsTablet": true,
+			"bundleIdentifier": "com.skyyinfinity.roomly"
 		},
 		"android": {
+			"googleServicesFile": "./google-services.json",
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"package": "com.skyyinfinity.roomly"
 		},
 		"web": {
 			"favicon": "./assets/favicon.png"

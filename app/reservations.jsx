@@ -5,6 +5,7 @@ import CustomButton from "../components/buttons/CustomButton";
 import ReservationService from "../services/Reservation.service";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ReservationCard from "../components/reservations/ReservationCard";
+import { useAuth } from "../providers/AuthProviders";
 
 const Reservations = () => {
     const [isLoading, setLoading] = useState(true);
@@ -12,6 +13,7 @@ const Reservations = () => {
     const [pastReservations, setPastReservations] = useState([]);
     const [refreshing, setRefreshing] = useState(false);
     const [mode, setMode] = useState('upcoming');
+    const { profile } = useAuth();
 
     useEffect(() => {
         fetchReservations();
@@ -22,8 +24,9 @@ const Reservations = () => {
         await AsyncStorage.getItem('@roomly_token')
         .then(async (token) => {
             if (token !== null) {
-                const response = await ReservationService.getAll(token);
-                if(response) {
+                const response = await ReservationService.getAll(token, profile.user.id);
+                
+                if(response && !response.message) {
                     // filter response to get only past reservations
                     const filteredPastReservations = response.filter(reservation => {
                         if(reservation.status !== 'upcoming') return reservation;
@@ -34,6 +37,9 @@ const Reservations = () => {
                     });
                     setPastReservations(filteredPastReservations);
                     setReservations(filteredReservations);
+                } else {
+                    setReservations([]);
+                    setPastReservations([]);
                 }
             }
             setLoading(false);
@@ -48,10 +54,6 @@ const Reservations = () => {
           setRefreshing(false);
         }, 1000);
     }, []);
-
-    const handleDelete = async (id) => {
-        console.log(`Deleting reservation ${id}`);
-    }
 
 	return <>
         <Title title="Réservations"/>

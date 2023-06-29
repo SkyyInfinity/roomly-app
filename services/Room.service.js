@@ -11,11 +11,16 @@ class RoomService {
         }
     }
 
-    async getAll(token) {
+    async getAll(token, id) {
         if(token) {
             this.config.headers['Authorization'] = `Bearer ${token}`;
-            const response = await axios.get(`${this.apiUrl}/rooms`, this.config);
-            return response.data;
+            if(id) {
+                const response = await axios.get(`${this.apiUrl}/rooms-with-favorites/${id}`, this.config);
+                return response.data;
+            } else {
+                const response = await axios.get(`${this.apiUrl}/rooms-with-favorites`, this.config);
+                return response.data;
+            }
         }
     }
 }

@@ -37,18 +37,22 @@ const Login = () => {
             password: password
         })
         .then(async (res) => {
-            const response = await AuthService.login(email, password);
-
-            if(response) {
-                setIsLoggedIn(true);
-                setProfile({
-                    token: response.token,
-                    user: response.user
-                });
-                showToast('Vous êtes maintenant connecté.');
-            } else {
+            await AuthService.login(email, password)
+            .then((response) => {
+                if(response) {
+                    setIsLoggedIn(true);
+                    setProfile({
+                        token: response.token,
+                        user: response.user
+                    });
+                    showToast('Vous êtes maintenant connecté.');
+                } else {
+                    setErrors(['Identifiants invalide. Veuillez réessayer.']);
+                }
+            })
+            .catch((err) => {
                 setErrors(['Identifiants invalide. Veuillez réessayer.']);
-            }
+            });
         })
         .catch((err) => {
             setErrors(err.errors);

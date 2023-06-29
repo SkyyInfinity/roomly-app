@@ -17,11 +17,15 @@ class AuthService {
             password: password
         };
 
-        const response = await axios.post(`${this.apiUrl}/login`, credentials, this.config);
-        if(response.data) {
-            await AsyncStorage.setItem('@roomly_token', response.data.token);
+        try {
+            const response = await axios.post(`${this.apiUrl}/login`, credentials, this.config);
+            if(response.data) {
+                await AsyncStorage.setItem('@roomly_token', response.data.token);
+            }
+            return response.data;
+        } catch(error) {
+            throw error;
         }
-        return response.data;
     }
 
     async register(firstName, lastName, email, password) {
