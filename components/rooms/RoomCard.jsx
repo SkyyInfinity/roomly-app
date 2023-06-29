@@ -22,7 +22,6 @@ const RoomCard = ({room, index, isFavorite, favorite}) => {
         .then(async (token) => {
             if (token !== null) {
                 const response = await FavoriteService.add(token, user_id, room_id);
-                console.log(response);
                 showToast('Ajouté aux favoris');
                 router.replace(pathname);
             }
@@ -35,7 +34,6 @@ const RoomCard = ({room, index, isFavorite, favorite}) => {
         .then(async (token) => {
             if (token !== null) {
                 const response = await FavoriteService.remove(token, id);
-                console.log(response);
                 showToast('Retiré des favoris');
                 router.replace(pathname);
             }

@@ -8,13 +8,19 @@ const CustomButton = ({className, to, color, isCard, children, isIcon, onPress, 
             primary: `w-full flex items-center justify-center bg-primary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
             secondary: `w-full flex items-center justify-center bg-secondary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
             tertiary: `w-full flex items-center justify-center bg-quaternary px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
-            error: `w-full flex items-center justify-center bg-red-100 px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`
+            error: `w-full flex items-center justify-center bg-red-100 px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
+            success: `w-full flex items-center justify-center bg-green-100 px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
+            info: `w-full flex items-center justify-center bg-blue-100 px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`,
+            warning: `w-full flex items-center justify-center bg-yellow-100 px-5 py-5 !m-0 ${isCard ? 'rounded-none' : 'rounded-lg'}`
         },
         text: {
             primary: 'text-black text-base text-center font-ralewaymedium',
             secondary: 'text-white text-base font-ralewaybold text-center font-ralewaymedium',
             tertiary: 'text-black text-base font-ralewaybold text-center font-ralewaymedium',
-            error: 'text-red-500 text-base font-ralewaybold text-center font-ralewaymedium'
+            error: 'text-red-500 text-base font-ralewaybold text-center font-ralewaymedium',
+            success: 'text-green-500 text-base font-ralewaybold text-center font-ralewaymedium',
+            info: 'text-blue-500 text-base font-ralewaybold text-center font-ralewaymedium',
+            warning: 'text-yellow-500 text-base font-ralewaybold text-center font-ralewaymedium'
         }
     }
 
