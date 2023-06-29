@@ -28,9 +28,11 @@ const CustomButton = ({className, to, color, isCard, children, isIcon, onPress, 
     
     if(to) {
         return (
-            <TouchableOpacity {...otherProps} onPress={onPress} activeOpacity={0.7}>
-                <Link className={`${classes.button[color]} ${classes.text[color]}${className ? ` ${className}` : ''}`} href={to}>{children}</Link>
-            </TouchableOpacity>
+           <Link href={to} className={`${classes.button[color]}${className ? ` ${className}` : ''}`} {...otherProps} asChild>
+                <TouchableOpacity  onPress={onPress} activeOpacity={0.7}>
+                    <Text style={{lineHeight: lineHeight}} className={classes.text[color]}>{children}</Text>
+                </TouchableOpacity>
+           </Link>
         );
     }
 
