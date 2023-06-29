@@ -22,6 +22,24 @@ class ReservationService {
             }
         }
     }
+
+    async add(token, user_id, room_id, start_at, end_at) {
+        if(token) {
+            const reservation = {
+                user: user_id,
+                room: room_id,
+                start_at: start_at,
+                end_at: end_at
+            }
+            try {
+                this.config.headers['Authorization'] = `Bearer ${token}`; 
+                const response = await axios.post(`${this.apiUrl}/reservations`, reservation, this.config);
+                return response.data;
+            } catch (error) {
+                throw error;
+            }
+        }
+    }
 }
 
 export default new ReservationService();

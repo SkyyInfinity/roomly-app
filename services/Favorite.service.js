@@ -24,9 +24,14 @@ class FavoriteService {
 
     async add(token, user_id, room_id) {
         if(token) {
+            const favorite = { 
+                user_id: user_id, 
+                room_id: room_id 
+            }
+            
             try {
                 this.config.headers['Authorization'] = `Bearer ${token}`;
-                const response = await axios.post(`${this.apiUrl}/favorites`, { user_id: user_id, room_id: room_id }, this.config);
+                const response = await axios.post(`${this.apiUrl}/favorites`, favorite, this.config);
                 return response.data;
             } catch (error) {
                 throw error;

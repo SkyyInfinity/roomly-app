@@ -29,11 +29,15 @@ const Reservations = () => {
                 if(response && !response.message) {
                     // filter response to get only past reservations
                     const filteredPastReservations = response.filter(reservation => {
-                        if(reservation.status !== 'upcoming') return reservation;
+                        let today = new Date();
+                        let reservationStartDate = new Date(reservation.start_at);
+                        if(reservationStartDate.getTime() < today.getTime()) return reservation;
                     });
                     // filter response to get only upcoming status reservations
                     const filteredReservations = response.filter(reservation => {
-                        if(reservation.status === 'upcoming') return reservation;
+                        let today = new Date();
+                        let reservationEndDate = new Date(reservation.end_at);
+                        if(reservationEndDate.getTime() < today.getTime()) return reservation;
                     });
                     setPastReservations(filteredPastReservations);
                     setReservations(filteredReservations);

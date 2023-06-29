@@ -24,7 +24,7 @@ const RoomCard = ({room, index, isFavorite, favorite}) => {
                 const response = await FavoriteService.add(token, user_id, room_id);
                 console.log(response);
                 showToast('Ajouté aux favoris');
-                router.replace('/favorites');
+                router.replace(pathname);
             }
         })
 
