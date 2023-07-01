@@ -37,7 +37,7 @@ const Reservations = () => {
                     const filteredReservations = response.filter(reservation => {
                         let today = new Date();
                         let reservationEndDate = new Date(reservation.end_at);
-                        if(reservationEndDate.getTime() < today.getTime()) return reservation;
+                        if(reservationEndDate.getTime() > today.getTime()) return reservation;
                     });
                     setPastReservations(filteredPastReservations);
                     setReservations(filteredReservations);
