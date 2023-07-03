@@ -21,12 +21,18 @@ const RoomCard = ({room, index, isFavorite, favorite}) => {
         await AsyncStorage.getItem('@roomly_token')
         .then(async (token) => {
             if (token !== null) {
-                const response = await FavoriteService.add(token, user_id, room_id);
-                showToast('Ajouté aux favoris');
-                router.replace(pathname);
+                try {
+                    const response = await FavoriteService.add(token, user_id, room_id);
+                    showToast('Ajouté aux favoris');
+                    router.replace(pathname);
+
+                } catch(error) {
+                    toast.show(error.data.message, {
+                        type: 'danger'
+                    });
+                }
             }
         })
-
     }
 
     const removeFavorite = async (id) => {
@@ -47,7 +53,7 @@ const RoomCard = ({room, index, isFavorite, favorite}) => {
     }
 
 	return (
-        <Animated.View entering={SlideInRight.delay(index * 100)} className="border border-slate-200 rounded-xl overflow-hidden mb-4 relative">
+        <Animated.View entering={SlideInRight.delay(index * 100)} className={`border border-slate-200 rounded-xl overflow-hidden mb-4 relative ${room.is_reserved ? 'disabled pointer-events-none opacity-60' : ''}`}>
             <CustomButton 
                 onPress={() => isFavorite ? removeFavorite(favorite) : addFavorite(profile.user.id, room.id)} 
                 color="primary" 
@@ -71,7 +77,13 @@ const RoomCard = ({room, index, isFavorite, favorite}) => {
                 </Text>
             </View>
             <View>
-                <CustomButton isCard={true} to={`/reserve/${room.id}`} color="secondary">Réserver maintenant</CustomButton>
+                {
+                    room.is_reserved ? (
+                        <CustomButton isCard={true} disabled color="tertiary">Cette salle est déjà reservé</CustomButton>
+                    ) : (
+                        <CustomButton isCard={true} to={`/reserve/${room.id}`} color="secondary">Réserver maintenant</CustomButton>
+                    )
+                }
             </View>
         </Animated.View>
     );

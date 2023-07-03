@@ -40,6 +40,18 @@ class ReservationService {
             }
         }
     }
+
+    async delete(token, id) {
+        if(token) {
+            try {
+                this.config.headers['Authorization'] = `Bearer ${token}`; 
+                const response = await axios.delete(`${this.apiUrl}/reservations/${id}`, this.config);
+                return response.data;
+            } catch (error) {
+                throw error;
+            }
+        }
+    }
 }
 
 export default new ReservationService();

@@ -3,8 +3,14 @@ import CustomButton from "../buttons/CustomButton";
 import DeleteIcon from "../../assets/images/icons/delete-18-regular.svg";
 import Animated, { SlideInRight } from "react-native-reanimated";
 import { Alert } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import ReservationService from "../../services/Reservation.service";
+import { useToast } from "react-native-toast-notifications";
+import { useRouter } from "expo-router";
 
 const ReservationCard = ({reservation, index}) => {
+    const toast = useToast();
+    const router = useRouter();
     let start_at = new Date(reservation.start_at);
 
     const handleDelete = async (id) => {
@@ -18,7 +24,16 @@ const ReservationCard = ({reservation, index}) => {
     }
 
     const deleteReservation = async (id) => {
-        console.log(`Deleting reservation ${id}`);
+        AsyncStorage.getItem('@roomly_token')
+        .then(async (token) => {
+            if (token !== null) {
+                const response = await ReservationService.delete(token, id);
+                if(response) {
+                    toast.show('Réservation supprimée avec succès !', { type: 'success' });
+                    router.replace('/reservations');
+                }
+            }
+        });
     }
 
 	return (
