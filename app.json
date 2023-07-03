@@ -34,6 +34,7 @@
 				"projectId": "951ac93b-276e-4acc-94b3-d41abe1086bd"
 			}
 		},
-		"owner": "skyyinfinity"
+		"owner": "skyyinfinity",
+        "jsEngine": "jsc"
 	}
 }
